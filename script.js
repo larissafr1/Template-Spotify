@@ -16,44 +16,44 @@ const greetingMessage =
 greetingElement.textContent = greetingMessage;
 
 const searchInput = document.getElementById('search-input');
-const resultsArtist = document.getElementById('result-artist');
-const resultPlatlist = document.getElementById('result-playlists');
+const resultArtist = document.getElementById("result-artist");
+const resultPlaylist = document.getElementById('result-playlists');
 
 function requestApi(searchTerm) {
-    const url ="http://localhost:3000/artists?name_like=${searchTerm}"
+    const url = `http://localhost:3000/artists?name_like=${searchTerm}`
 
     // fetch: usado para fazer requisições de API
     fetch(url)
-        .then((Response) => Response.json())
-        .then((result) => displayResults(result)) 
+        .then((response) => response.json())
+        .then((result) => displayResults(result))
 }
 
 function displayResults(result) {
-    resultPlatlist.classList.add('hidden');
+    resultPlaylist.classList.add("hidden")
     const artistName = document.getElementById('artist-name');
     const artistImage = document.getElementById('artist-img');
 
     result.forEach(element => {
         artistName.innerText = element.name;
-        artistImage.src = element.urlImg;        
+        artistImage.src = element.urlImg;
     });
 
-    // exibir
-    resultsArtist.classList.remove('hidden');
+	// exibir
+    resultArtist.classList.remove('hidden');
 }
 
 // manipulação de eventos 
-document.addEventListener('input', function() {
+document.addEventListener('input', function () {
     const searchTerm = searchInput.value.toLowerCase();
 
-    // === vê se são iguais e do mesmo tipo
+	// === vê se são iguais e do mesmo tipo
     if (searchTerm === '') {
-        resultPlatlist.classList.add('hidden');
-        resultsArtist.classList.remove('hidden');
+        resultPlaylist.classList.add('hidden');
+        resultArtist.classList.remove('hidden');
 
-        // parar a execução porque não precisamos de mais nada para acontecer
-        return;
+// parar a execução porque não precisamos de mais nada para acontecer
+        return
     }
-
+    
     requestApi(searchTerm);
 })
